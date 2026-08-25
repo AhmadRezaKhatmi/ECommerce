@@ -10,7 +10,21 @@ namespace Core.Specifications
 {
     public class BaseSpecification<T>(Expression<Func<T, bool>> criteria) : ISpecification<T>
     {
-      
-        public Expression<Func<T, bool>> Criteria => throw new NotImplementedException();
+        protected BaseSpecification() : this(null) { }
+
+        public Expression<Func<T, bool>> Criteria => criteria;
+
+        public Expression<Func<T, object>>? OrderBy { get; private set; }
+
+        public Expression<Func<T, object>>? OrderByDescending { get; private set; }
+
+        protected void AddOrderBy(Expression<Func<T, Object>> OrderByExpression)
+        {
+            OrderBy = OrderByExpression;
+        }
+        protected void AddOrderByDescending(Expression<Func<T, Object>> OrderByDescendingExpression)
+        {
+            OrderByDescending = OrderByDescendingExpression;
+        }
     }
 }
