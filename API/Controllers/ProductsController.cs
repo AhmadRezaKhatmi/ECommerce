@@ -7,23 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController(IGenericRepository<Product> repo) : ControllerBase
+
+    public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery] ProductSpecParams specParams)
         {
-            var spec=new ProductSpecification(specParams);
+            var spec = new ProductSpecification(specParams);
 
-            var products=await repo.ListAsync(spec);
-
-            var count=await repo.CountAsync(spec);
-
-            var pagination = new Pagination<Product>(specParams.PageIndex,
-                specParams.PageSize,count,products);
-
-            return Ok(pagination);
+            return await base.CreatePagedResult(repo, spec, specParams.PageIndex, specParams.PageSize);
         }
 
 
@@ -79,9 +71,9 @@ namespace API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
-            var product =await repo.GetByIdAsync(id);
+            var product = await repo.GetByIdAsync(id);
 
-            if (product == null) 
+            if (product == null)
                 return NotFound();
 
 
