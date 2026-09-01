@@ -12,7 +12,9 @@ namespace Core.Interfaces
         Expression<Func<T, bool>>? Criteria { get; }
         Expression<Func<T, object>>? OrderBy { get; }
         Expression<Func<T, object>>? OrderByDescending { get; }
-        IQueryable<T> ApplyCriteria(IQueryable<T> query);
+        int Take { get; }
+        int Skip { get; }
+        bool IsPagingEnabled { get; }
     }
 
 
