@@ -8,9 +8,13 @@ namespace Core.Specifications
 {
     public class ProductSpecParams
     {
-        private const int MaxPageSize = 50;
+
+        //Page Index
         public int PageIndex { get; set; } = 1;
 
+        //Page Size
+        private const int MaxPageSize = 50;
+       
         private int _pageSize = 6;
 
         public int PageSize
@@ -19,7 +23,7 @@ namespace Core.Specifications
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
 
-
+        //Brands
         private List<string> _brands = [];
         public List<string> Brands
         {
@@ -31,6 +35,7 @@ namespace Core.Specifications
             }
         }
 
+        //Types
         private List<string> _types = [];
         public List<string> Types
         {
@@ -42,8 +47,10 @@ namespace Core.Specifications
             }
         }
 
+        //Sort
         public string? Sort { get; set; }
 
+        //Search
         private string? _search;
         public string Search
         {
