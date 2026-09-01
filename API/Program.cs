@@ -1,3 +1,4 @@
+using API.MiddleWare;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,14 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+
+
+//This Is Our Personalize MiddleWares
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
