@@ -15,18 +15,18 @@ namespace Core.Specifications
            (specParams.Types.Count == 0 || specParams.Types.Contains(x.Type))
        )
         {
-            ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
+            base.ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
 
             switch (specParams.Sort)
             {
                 case "priceAsc":
-                    AddOrderBy(x => x.Price);
+                    base.AddOrderBy(x => x.Price);
                     break;
                 case "priceDesc":
-                    AddOrderByDescending(x => x.Price);
+                    base.AddOrderByDescending(x => x.Price);
                     break;
                 default:
-                    AddOrderBy(x => x.Name);
+                    base.AddOrderBy(x => x.Name);
                     break;
             }
         }
