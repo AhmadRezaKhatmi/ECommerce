@@ -56,6 +56,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
+app.MapGroup("api").MapIdentityApi<AppUser>(); //api/login
 
 if (app.Environment.IsDevelopment())
 {
@@ -68,7 +69,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapIdentityApi<AppUser>();
 
 try
 {
