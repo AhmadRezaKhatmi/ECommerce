@@ -15,7 +15,7 @@ namespace Infrastructure.Data
         public DbSet<Product> Products { get; set; }
 
 
-        //برای انجام پیکربندی دلخواه موجودیت ها
+        //برای انجام پیکربندی اختصاصی موجودیت ها
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
