@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Extensions;
 using Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -78,8 +79,7 @@ namespace API.Controllers
             if (User.Identity?.IsAuthenticated == false)
                 return NoContent();
 
-            var user = await signInManager.UserManager.Users.
-                FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+            var user = await signInManager.UserManager.GetUserByEmail(User);
 
             if (user == null)
                 return Unauthorized();
