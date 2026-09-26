@@ -11,7 +11,6 @@ namespace Core.Entities
     {
         public string? FirstName { get; set; } //اختصاصی اضافه کردیم
         public string? LastName { get; set; } //اختصاصی اضافه کردیم
-
         public Address? Address { get; set; } // کلید خارجی می گیرد از جدول آدرس ها
     }
 }
