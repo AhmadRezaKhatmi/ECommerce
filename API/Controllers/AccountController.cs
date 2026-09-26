@@ -11,25 +11,51 @@ namespace API.Controllers
     public class AccountController(SignInManager<AppUser> signInManager) : BaseApiController
     {
         //ثبت نام کاربر
-        [HttpPost("Register")] 
-        public async Task<ActionResult> Register (RegisterDTO registerDTO)
+        [HttpPost("Register")]
+        public async Task<ActionResult> Register(RegisterDTO registerDTO)
         {
             var user = new AppUser
             {
                 Email = registerDTO.Email,
                 FirstName = registerDTO.FirstName,
                 LastName = registerDTO.LastName,
-                UserName=registerDTO.Email
+                UserName = registerDTO.Email
             };
 
-            var result = await signInManager.UserManager.CreateAsync(user,registerDTO.Password);
+            var result = await signInManager.UserManager.CreateAsync(user, registerDTO.Password);
 
-            if (!result.Succeeded) 
+            if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
             return Ok();
 
         }
+
+
+
+        //ورود کاربر
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(LoginDTO loginDTO)
+        {
+
+            var user = await signInManager.UserManager.FindByEmailAsync(loginDTO.Email);
+
+            if (user == null)
+                return Unauthorized("Email is incorrect");
+
+
+            var result = await signInManager.PasswordSignInAsync(
+                user,
+                loginDTO.Password,
+                false,
+                false);
+
+            if (!result.Succeeded)
+                return Unauthorized("Email or password is incorrect");
+
+            return Ok();
+        }
+
 
 
 
@@ -49,14 +75,14 @@ namespace API.Controllers
         [HttpGet("user-info")]
         public async Task<ActionResult> GetUserInfo()
         {
-            if (User.Identity?.IsAuthenticated == false) 
+            if (User.Identity?.IsAuthenticated == false)
                 return NoContent();
 
             var user = await signInManager.UserManager.Users.
                 FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
             if (user == null)
-                return Unauthorized(); 
+                return Unauthorized();
 
 
             return Ok(new
@@ -65,6 +91,7 @@ namespace API.Controllers
                 user.LastName,
                 user.Email
             });
+
         }
 
 
@@ -74,8 +101,9 @@ namespace API.Controllers
         [HttpGet("auth-status")]
         public ActionResult GetAuthState()
         {
-            return Ok(new 
-            { IsAuthenticated = User.Identity?.IsAuthenticated ?? false 
+            return Ok(new
+            {
+                IsAuthenticated = User.Identity?.IsAuthenticated ?? false
             });
         }
 
