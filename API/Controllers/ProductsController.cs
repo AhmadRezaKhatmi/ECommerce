@@ -10,6 +10,9 @@ namespace API.Controllers
 
     public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
     {
+
+
+
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery] ProductSpecParams specParams)
         {
@@ -17,6 +20,9 @@ namespace API.Controllers
 
             return await base.CreatePagedResult(repo, spec, specParams.PageIndex, specParams.PageSize);
         }
+
+
+
 
 
 
@@ -33,6 +39,10 @@ namespace API.Controllers
 
 
 
+
+
+
+
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
@@ -45,6 +55,10 @@ namespace API.Controllers
 
             return BadRequest("Problem creating product");
         }
+
+
+
+
 
 
 
@@ -68,6 +82,9 @@ namespace API.Controllers
 
 
 
+
+
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -87,14 +104,20 @@ namespace API.Controllers
             return BadRequest("Problem deleting the product");
         }
 
+
+
+
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
         {
-
             // TODO
 
             return Ok();
         }
+
+
+
+
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
@@ -103,6 +126,11 @@ namespace API.Controllers
 
             return Ok();
         }
+
+
+
+
+
 
 
         private bool ProductExists(int id)
